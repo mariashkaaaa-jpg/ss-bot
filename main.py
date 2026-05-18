@@ -4,6 +4,7 @@ import time
 
 BOT_TOKEN = "8717145220:AAHOXlgEFFw7nr9Z5ijbm17MQWu8jnN5Nho"
 CHAT_ID = "-5186118083"
+
 URL = "https://www.ss.lv/lv/real-estate/flats/riga/all/hand_over/filter/"
 
 try:
@@ -22,75 +23,94 @@ def send(msg):
     )
 
 while True:
+
     try:
-        r = requests.get(URL, headers={
-            "User-Agent": "Mozilla/5.0"
-        })
+
+        r = requests.get(
+            URL,
+            headers={"User-Agent": "Mozilla/5.0"}
+        )
 
         soup = BeautifulSoup(r.text, "html.parser")
 
         for row in soup.select("tr"):
 
-    text = row.get_text(" ", strip=True)
+            text = row.get_text(" ", strip=True)
 
-    if "EUR" not in text:
-        continue
+            if "EUR" not in text:
+                continue
 
-    try:
-        parts = text.split()
+            try:
 
-        price = None
+                parts = text.split()
 
-        for part in parts:
-            clean = part.replace("€", "").replace("EUR", "").strip()
+                price = None
 
-            if clean.isdigit():
-                num = int(clean)
+                for part in parts:
 
-                if 100 <= num <= 5000:
-                    price = num
+                    clean = (
+                        part.replace("€", "")
+                        .replace("EUR", "")
+                        .strip()
+                    )
 
-        if not price:
-            continue
+                    if clean.isdigit():
 
-        if price < 300 or price > 500:
-            continue
-        rooms = None
+                        num = int(clean)
 
-for part in parts:
-    if part in ["1", "2", "3", "4", "5", "6"]:
-        num = int(part)
+                        if 100 <= num <= 5000:
+                            price = num
 
-        if 1 <= num <= 6:
-            rooms = num
+                if not price:
+                    continue
 
-if not rooms:
-    continue
+                if price < 300 or price > 500:
+                    continue
 
-if rooms < 2 or rooms > 3:
-    continue
+                rooms = None
 
-        link = row.select_one("a.am")
+                for part in parts:
 
-        if not link:
-            continue
+                    if part in ["1", "2", "3", "4", "5", "6"]:
 
-        href = link.get("href")
+                        num = int(part)
 
-        if href and "/msg/" in href:
+                        if 1 <= num <= 6:
+                            rooms = num
 
-            full = "https://www.ss.lv" + href
+                if not rooms:
+                    continue
 
-        if full not in seen:
+                if rooms < 2 or rooms > 3:
+                    continue
 
-            seen.add(full)
+                link = row.select_one("a.am")
 
-            with open("seen.txt", "a") as f:
-                f.write(full + "\n")
+                if not link:
+                    continue
 
-            send(f"🏠 {price} EUR\n\n{full}")
+                href = link.get("href")
 
-    except:
-        pass
+                if href and "/msg/" in href:
 
-    time.sleep(300)
+                    full = "https://www.ss.lv" + href
+
+                    if full not in seen:
+
+                        seen.add(full)
+
+                        with open("seen.txt", "a") as f:
+                            f.write(full + "\n")
+
+                        send(
+                            f"🏠 {rooms} istabas | {price} EUR\n\n{full}"
+                        )
+
+            except:
+                pass
+
+        time.sleep(300)
+
+    except Exception as e:
+        print(e)
+        time.sleep(60)
