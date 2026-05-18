@@ -45,9 +45,7 @@ while True:
         )
 
         soup = BeautifulSoup(r.text, "html.parser")
-        send("SS.lv ielādējās")
 
-        send(f"Atrasti {len(soup.select('tr'))} rows")
         for row in soup.select("tr"):
 
             text = row.get_text(" ", strip=True)
@@ -109,7 +107,7 @@ while True:
                 if not href:
                     continue
 
-                if "/msg/" in href:
+                if href.startswith("/"):
 
                     full = "https://www.ss.lv" + href
 
