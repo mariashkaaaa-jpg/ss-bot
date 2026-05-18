@@ -53,7 +53,7 @@ while True:
 
         if price < 300 or price > 500:
             continue
-            rooms = None
+        rooms = None
 
 for part in parts:
     if part in ["1", "2", "3", "4", "5", "6"]:
@@ -79,16 +79,17 @@ if rooms < 2 or rooms > 3:
 
             full = "https://www.ss.lv" + href
 
-            if full not in seen:
+        if full not in seen:
 
-                seen.add(full)
+                    seen.add(full)
 
-                send(f"🏠 {price} EUR\n\n{full}")
+                    send(f"🏠 {price} EUR\n\n{full}")
 
     except:
         pass
-        time.sleep(300)
 
-    except Exception as e:
-        print(e)
-        time.sleep(60)
+    time.sleep(300)
+
+except Exception as e:
+    print(e)
+    time.sleep(60)
