@@ -16,7 +16,7 @@ def run_web():
 
 Thread(target=run_web).start()
 
-BOT_TOKEN = "TELEGRAM_BOT_TOKEN"
+BOT_TOKEN = "8717145220:AAHOXlgEFFw7nr9Z5ijbm17MQWu8jnN5Nho"
 CHAT_ID = "-5186118083"
 
 URL = "https://www.ss.lv/lv/real-estate/flats/riga/all/hand_over/filter/"
