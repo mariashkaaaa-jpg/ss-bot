@@ -79,8 +79,8 @@ while True:
                 if not price:
                     continue
 
-                if price < 300 or price > 500:
-                    continue
+                # if price < 300 or price > 500:
+                #     continue
 
                 rooms = None
 
@@ -96,8 +96,8 @@ while True:
                 if not rooms:
                     continue
 
-                if rooms < 2 or rooms > 3:
-                    continue
+                # if rooms < 2 or rooms > 3:
+                #     continue
 
                 link = row.find("a")
 
