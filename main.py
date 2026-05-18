@@ -6,7 +6,11 @@ BOT_TOKEN = "8717145220:AAHOXlgEFFw7nr9Z5ijbm17MQWu8jnN5Nho"
 CHAT_ID = "6021276638"
 URL = "https://www.ss.lv/lv/real-estate/flats/riga/all/hand_over/filter/"
 
-seen = set()
+try:
+    with open("seen.txt", "r") as f:
+        seen = set(f.read().splitlines())
+except:
+    seen = set()
 
 def send(msg):
     requests.get(
@@ -81,15 +85,14 @@ if rooms < 2 or rooms > 3:
 
         if full not in seen:
 
-                    seen.add(full)
+            seen.add(full)
 
-                    send(f"🏠 {price} EUR\n\n{full}")
+            with open("seen.txt", "a") as f:
+                f.write(full + "\n")
+
+            send(f"🏠 {price} EUR\n\n{full}")
 
     except:
         pass
 
     time.sleep(300)
-
-except Exception as e:
-    print(e)
-    time.sleep(60)
