@@ -43,92 +43,41 @@ while True:
 
         r = requests.get(
             URL,
-            headers={"User-Agent": "Mozilla/5.0"}
+            headers={
+                "User-Agent": "Mozilla/5.0"
+            }
         )
 
         soup = BeautifulSoup(r.text, "html.parser")
 
-        for row in soup.select("tr"):
+        links = soup.find_all("a")
 
-            text = row.get_text(" ", strip=True)
+        for link in links:
 
-            if "EUR" not in text:
+            href = link.get("href")
+
+            if not href:
                 continue
 
-            try:
+            if "/msg/" not in href:
+                continue
 
-                parts = text.split()
+            full = "https://www.ss.lv" + href
 
-                price = None
+            if full in seen:
+                continue
 
-                for part in parts:
+            seen.add(full)
 
-                    clean = (
-                        part.replace("€", "")
-                        .replace("EUR", "")
-                        .strip()
-                    )
+            with open("seen.txt", "a") as f:
+                f.write(full + "\n")
 
-                    if clean.isdigit():
-
-                        num = int(clean)
-
-                        if 100 <= num <= 5000:
-                            price = num
-
-                if not price:
-                    continue
-
-                # if price < 300 or price > 500:
-                #     continue
-
-                rooms = None
-
-                for part in parts:
-
-                    if part in ["1", "2", "3", "4", "5", "6"]:
-
-                        num = int(part)
-
-                        if 1 <= num <= 6:
-                            rooms = num
-
-                if not rooms:
-                    continue
-
-                # if rooms < 2 or rooms > 3:
-                #     continue
-
-                link = row.find("a")
-
-                if not link:
-                    continue
-
-                href = link.get("href")
-
-                if not href:
-                    continue
-
-                if href.startswith("/"):
-
-                    full = "https://www.ss.lv" + href
-
-                    if full not in seen:
-
-                        seen.add(full)
-
-                        with open("seen.txt", "a") as f:
-                            f.write(full + "\n")
-
-                        send(
-                            f"🏠 {rooms} istabas | {price} EUR\n\n{full}"
-                        )
-
-            except:
-                pass
+            send(f"🏠 Jauns sludinājums\n\n{full}")
 
         time.sleep(300)
 
     except Exception as e:
+
         print(e)
+
         time.sleep(60)
