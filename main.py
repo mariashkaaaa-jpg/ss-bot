@@ -1,6 +1,19 @@
 import requests
 from bs4 import BeautifulSoup
 import time
+from flask import Flask
+from threading import Thread
+
+app = Flask(__name__)
+
+@app.route("/")
+def home():
+    return "Bot is running"
+
+def run_web():
+    app.run(host="0.0.0.0", port=10000)
+
+Thread(target=run_web).start()
 
 BOT_TOKEN = "8717145220:AAHOXlgEFFw7nr9Z5ijbm17MQWu8jnN5Nho"
 CHAT_ID = "-5186118083"
