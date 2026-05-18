@@ -78,7 +78,7 @@ while True:
                 if not price:
                     continue
 
-                if price < 300 or price > 500:
+                if price < 1 or price > 999999:
                     continue
 
                 rooms = None
@@ -95,7 +95,7 @@ while True:
                 if not rooms:
                     continue
 
-                if rooms < 2 or rooms > 3:
+                if rooms < 1 or rooms > 6:
                     continue
 
                 link = row.select_one("a.am")
