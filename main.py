@@ -99,14 +99,17 @@ while True:
                 if rooms < 1 or rooms > 6:
                     continue
 
-                link = row.select_one("a.am")
+               link = row.find("a")
 
                 if not link:
                     continue
 
                 href = link.get("href")
 
-                if href and "/msg/" in href:
+                if not href:
+                    continue
+
+                if "/msg/" in href:
 
                     full = "https://www.ss.lv" + href
 
