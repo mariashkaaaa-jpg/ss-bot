@@ -36,6 +36,7 @@ def send(msg):
     )
 
 while True:
+    send("BOTS STRĀDĀ")
 
     try:
 
