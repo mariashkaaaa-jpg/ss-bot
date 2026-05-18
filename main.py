@@ -27,17 +27,66 @@ while True:
 
         links = soup.select("a.am")
 
-        for link in links:
-            href = link.get("href")
+        for row in soup.select("tr"):
 
-            if href and "/msg/" in href:
-                full = "https://www.ss.lv" + href
+    text = row.get_text(" ", strip=True)
 
-                if full not in seen:
-                    seen.add(full)
+    if "EUR" not in text:
+        continue
 
-                    send(f"🏠 Jauns dzīvoklis\n\n{full}")
+    try:
+        parts = text.split()
 
+        price = None
+
+        for part in parts:
+            clean = part.replace("€", "").replace("EUR", "").strip()
+
+            if clean.isdigit():
+                num = int(clean)
+
+                if 100 <= num <= 5000:
+                    price = num
+
+        if not price:
+            continue
+
+        if price < 300 or price > 500:
+            continue
+            rooms = None
+
+for part in parts:
+    if part in ["1", "2", "3", "4", "5", "6"]:
+        num = int(part)
+
+        if 1 <= num <= 6:
+            rooms = num
+
+if not rooms:
+    continue
+
+if rooms < 2 or rooms > 3:
+    continue
+
+        link = row.select_one("a.am")
+
+        if not link:
+            continue
+
+        href = link.get("href")
+
+        if href and "/msg/" in href:
+
+            full = "https://www.ss.lv" + href
+
+            if full not in seen:
+
+                seen.add(full)
+
+                send(f"🏠 {price} EUR\n\n{full}")
+
+    except:
+        pass
         time.sleep(300)
 
     except Exception as e:
