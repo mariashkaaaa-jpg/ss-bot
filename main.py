@@ -45,7 +45,9 @@ while True:
         )
 
         soup = BeautifulSoup(r.text, "html.parser")
+        send("SS.lv ielādējās")
 
+        send(f"Atrasti {len(soup.select('tr'))} rows")
         for row in soup.select("tr"):
 
             text = row.get_text(" ", strip=True)
