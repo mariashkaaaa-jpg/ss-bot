@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 import time
+
 from flask import Flask
 from threading import Thread
 
@@ -15,7 +16,7 @@ def run_web():
 
 Thread(target=run_web).start()
 
-BOT_TOKEN = "8717145220:AAHOXlgEFFw7nr9Z5ijbm17MQWu8jnN5Nho"
+BOT_TOKEN = "TELEGRAM_BOT_TOKEN"
 CHAT_ID = "-5186118083"
 
 URL = "https://www.ss.lv/lv/real-estate/flats/riga/all/hand_over/filter/"
@@ -27,6 +28,7 @@ except:
     seen = set()
 
 def send(msg):
+
     requests.get(
         f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage",
         params={
@@ -36,7 +38,7 @@ def send(msg):
     )
 
 while True:
-    
+
     try:
 
         r = requests.get(
@@ -77,7 +79,7 @@ while True:
                 if not price:
                     continue
 
-                if price < 1 or price > 999999:
+                if price < 300 or price > 500:
                     continue
 
                 rooms = None
@@ -94,10 +96,10 @@ while True:
                 if not rooms:
                     continue
 
-                if rooms < 1 or rooms > 6:
+                if rooms < 2 or rooms > 3:
                     continue
 
-               link = row.find("a")
+                link = row.find("a")
 
                 if not link:
                     continue
