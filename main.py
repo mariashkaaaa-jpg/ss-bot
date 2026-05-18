@@ -2,10 +2,9 @@ import requests
 from bs4 import BeautifulSoup
 import time
 
-BOT_TOKEN = "IEVIETO_SAVU_TELEGRAM_TOKEN"
-CHAT_ID = "IEVIETO_SAVU_CHAT_ID"
-
-URL = "IEVIETO_SAVU_SS_LV_LINKU"
+BOT_TOKEN = 8717145220:AAHOXlgEFFw7nr9Z5ijbm17MQWu8jnN5Nho
+CHAT_ID = 6021276638
+URL = https://www.ss.lv/lv/real-estate/flats/riga/all/hand_over/filter/
 
 seen = set()
 
